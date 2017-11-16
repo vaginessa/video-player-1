@@ -21,8 +21,8 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+//import com.google.android.gms.analytics.HitBuilders;
+//import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,14 +78,14 @@ public class LiveTVFragment extends Fragment implements AbsListView.OnItemClickL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        // Get tracker.
-        Tracker t = ((AppController) getActivity().getApplication()).getTracker(
-                AppController.TrackerName.APP_TRACKER);
-        // Set screen name.
-        t.setScreenName(getString(R.string.live_tv_screen));
-        // Send a screen view.
-        t.send(new HitBuilders.AppViewBuilder().build());
+//
+//        // Get tracker.
+//        Tracker t = ((AppController) getActivity().getApplication()).getTracker(
+//                AppController.TrackerName.APP_TRACKER);
+//        // Set screen name.
+//        t.setScreenName(getString(R.string.live_tv_screen));
+//        // Send a screen view.
+//        t.send(new HitBuilders.AppViewBuilder().build());
 
         adapter = new LiveTVAdapter(getActivity(), tvList);
 

@@ -48,7 +48,7 @@
     <string name="title_activity_torrents_help" translatable="false">Torrents Help Activity</string>
     <string name="share_message" translatable="false">http://tiny.cc/YKPlayerPro</string>
     <string name="version_link" translatable="false">http://heroic-command-719.appspot.com/version.json</string>
-    <string name="channels_link" translatable="false">http://heroic-command-719.appspot.com/channels.json</string>
+    <string name="channels_link" translatable="false">https://raw.githubusercontent.com/yashketkar/yk-player/kiswe/channels.json</string>
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-2265268935639337/6674990207</string>
     <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-2265268935639337/5198257009</string>
     <string name="app_tracking_id" translatable="false">UA-51239695-4</string>
