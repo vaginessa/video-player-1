@@ -74,13 +74,13 @@ public class VideosFragment extends Fragment implements AbsListView.OnItemClickL
         Cursor c = getActivity().getContentResolver().query(uri, projection, null, null, null);
         mAdapter = new VideosAdapter(getActivity(), c, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
-        // Get tracker.
-        Tracker t = ((AppController) getActivity().getApplication()).getTracker(
-                AppController.TrackerName.APP_TRACKER);
-        // Set screen name.
-        t.setScreenName(getString(R.string.videos_screen));
-        // Send a screen view.
-        t.send(new HitBuilders.AppViewBuilder().build());
+//        // Get tracker.
+//        Tracker t = ((AppController) getActivity().getApplication()).getTracker(
+//                AppController.TrackerName.APP_TRACKER);
+//        // Set screen name.
+//        t.setScreenName(getString(R.string.videos_screen));
+//        // Send a screen view.
+//        t.send(new HitBuilders.AppViewBuilder().build());
     }
 
     @Override
@@ -99,8 +99,9 @@ public class VideosFragment extends Fragment implements AbsListView.OnItemClickL
         }
 
         View view = inflater.inflate(R.layout.fragment_videos, container, false);
-        // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
+        mListView.setEmptyView(view.findViewById(android.R.id.empty));
+        // Set the adapter
         ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
