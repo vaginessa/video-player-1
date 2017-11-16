@@ -20,6 +20,7 @@ import java.util.Set;
 /**
  * Created by Yash Ketkar on 12/30/2014.
  */
+
 public class VideosAdapter extends CursorAdapter {
 
     private LayoutInflater mInflater;

@@ -7,8 +7,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
+//import com.google.android.gms.analytics.GoogleAnalytics;
+//import com.google.android.gms.analytics.Tracker;
 
 import java.util.HashMap;
 
@@ -25,7 +25,7 @@ public class AppController extends Application {
 
     private static AppController mInstance;
 
-    HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
+//    HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 
     /**
      * Enum used to identify the tracker that needs to be used for tracking.
@@ -34,22 +34,9 @@ public class AppController extends Application {
      * storing them all in Application object helps ensure that they are created only once per
      * application instance.
      */
-    public enum TrackerName {
-        APP_TRACKER, // Tracker used only in this app.
-    }
-
-    synchronized Tracker getTracker(TrackerName trackerId) {
-        if (!mTrackers.containsKey(trackerId)) {
-
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            Tracker t = analytics.newTracker(getString(R.string.app_tracking_id));
-            t.enableAdvertisingIdCollection(true);
-            t.enableAutoActivityTracking(true);
-            mTrackers.put(trackerId, t);
-
-        }
-        return mTrackers.get(trackerId);
-    }
+//    public enum TrackerName {
+//        APP_TRACKER, // Tracker used only in this app.
+//    }
 
     @Override
     public void onCreate() {

@@ -6,4 +6,7 @@
     <color name="play_blue_dark">#0277bd</color>
     <color name="play_red_dark">#d23f31</color>
     <color name="play_green_dark">#446f26</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
 </resources>

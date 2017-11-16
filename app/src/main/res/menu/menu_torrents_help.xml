@@ -4,7 +4,8 @@
     tools:context="com.yashketkar.ykplayer.TorrentsHelpActivity">
 
     <!-- Adds an item to the list. -->
-    <item android:id="@+id/action_previous"
+    <item
+        android:id="@+id/action_previous"
         android:title="@string/action_previous"
         app:showAsAction="ifRoom|withText" />
 </menu>

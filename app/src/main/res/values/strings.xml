@@ -43,6 +43,7 @@
     </string-array>
 
     <string name="app_name" translatable="false">YK Player</string>
+    <string name="app_caption" translatable="false">Play Anything!</string>
     <string name="title_activity_main" translatable="false">Main Activity</string>
     <string name="title_activity_video_player" translatable="false">Video Player Activity</string>
     <string name="title_activity_torrents_help" translatable="false">Torrents Help Activity</string>
@@ -52,24 +53,8 @@
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-2265268935639337/6674990207</string>
     <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-2265268935639337/5198257009</string>
     <string name="app_tracking_id" translatable="false">UA-51239695-4</string>
+    <string name="website_link" translatable="false">www.yashketkar.com</string>
     <string name="preference_file_key" translatable="false">com.yashketkar.ykplayer.USER_PREFERENCES</string>
-    <string name="videos_screen" translatable="false">VideosScreen</string>
-    <string name="torrents_screen" translatable="false">TorrentsScreen</string>
-    <string name="live_tv_screen" translatable="false">LiveTVScreen</string>
-    <string name="ad_screen" translatable="false">AdScreen</string>
-    <string name="main_screen" translatable="false">MainScreen</string>
-    <string name="video_player_screen" translatable="false">VideoPlayerScreen</string>
-    <string name="torrents_help_screen" translatable="false">TorrentsHelpScreen</string>
-
-    <!-- Nav Drawer List Item Icons -->
-    <!-- Keep them in order as the titles are in -->
-    <array name="nav_drawer_icons">
-        <item>@drawable/ic_video_collection_grey600_48dp</item>
-        <item>@drawable/ic_cloud_grey600_48dp</item>
-        <item>@drawable/ic_torrent_grey600_48dp</item>
-        <item>@drawable/ic_tv_grey600_48dp</item>
-        <item>@drawable/ic_share_grey600_48dp</item>
-    </array>
 
     <array name="torrents_help_icons">
         <item>@drawable/torrents_help_1</item>
@@ -80,5 +65,5 @@
         <item>@drawable/torrents_help_6</item>
         <item>@drawable/torrents_help_7</item>
     </array>
-
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_videos"
+            android:icon="@drawable/ic_video_library_black_24dp"
+            android:title="Videos" />
+        <item
+            android:id="@+id/nav_network_stream"
+            android:icon="@drawable/ic_http_black_24dp"
+            android:title="Network Stream" />
+        <item
+            android:id="@+id/nav_torrent_stream"
+            android:icon="@drawable/ic_cloud_black_24dp"
+            android:title="Torrent Stream" />
+        <item
+            android:id="@+id/nav_live_tv"
+            android:icon="@drawable/ic_live_tv_black_24dp"
+            android:title="Live TV" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_share_black_24dp"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_website"
+                android:icon="@drawable/ic_web_black_24dp"
+                android:title="Visit Website" />
+        </menu>
+    </item>
+
+</menu>
