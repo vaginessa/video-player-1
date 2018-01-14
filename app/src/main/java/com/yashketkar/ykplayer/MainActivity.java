@@ -316,7 +316,7 @@ public class MainActivity extends AppCompatActivity
                                         .setSmallIcon(R.drawable.ic_update)
                                         .setContentTitle(valert_title)
                                         .setContentText(valert_message)
-                                        .setColor(getResources().getColor(R.color.play_blue));
+                                        .setColor(getResources().getColor(R.color.colorPrimary));
                         Intent resultIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(downloadurl));
 
                         // Because clicking the notification opens a new ("special") activity, there's

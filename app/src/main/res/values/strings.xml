@@ -42,16 +42,15 @@
         <item>(7/7) Grab some popcorn and enjoy your video!</item>
     </string-array>
 
-    <string name="app_name" translatable="false">YK Player</string>
+    <string name="app_name" translatable="false">Videos</string>
     <string name="app_caption" translatable="false">Play Anything!</string>
+    <string name="app_version" translatable="false">v2.0</string>
     <string name="title_activity_main" translatable="false">Main Activity</string>
     <string name="title_activity_video_player" translatable="false">Video Player Activity</string>
     <string name="title_activity_torrents_help" translatable="false">Torrents Help Activity</string>
     <string name="share_message" translatable="false">http://tiny.cc/YKPlayerPro</string>
     <string name="version_link" translatable="false">http://heroic-command-719.appspot.com/version.json</string>
     <string name="channels_link" translatable="false">https://raw.githubusercontent.com/yashketkar/yk-player/kiswe/channels.json</string>
-    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-2265268935639337/6674990207</string>
-    <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-2265268935639337/5198257009</string>
     <string name="app_tracking_id" translatable="false">UA-51239695-4</string>
     <string name="website_link" translatable="false">www.yashketkar.com</string>
     <string name="preference_file_key" translatable="false">com.yashketkar.ykplayer.USER_PREFERENCES</string>
@@ -65,5 +64,4 @@
         <item>@drawable/torrents_help_6</item>
         <item>@drawable/torrents_help_7</item>
     </array>
-    <string name="title_activity_main2">Main2Activity</string>
 </resources>
