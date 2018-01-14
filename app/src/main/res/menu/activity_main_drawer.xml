@@ -7,31 +7,31 @@
         <item
             android:id="@+id/nav_videos"
             android:icon="@drawable/ic_video_library_black_24dp"
-            android:title="Local Videos" />
+            android:title="@string/nav_local_videos" />
         <item
             android:id="@+id/nav_network_stream"
             android:icon="@drawable/ic_http_black_24dp"
-            android:title="Network Stream" />
+            android:title="@string/nav_network_stream" />
         <item
             android:id="@+id/nav_torrent_stream"
             android:icon="@drawable/ic_cloud_black_24dp"
-            android:title="Torrent Stream" />
+            android:title="@string/nav_torrent_stream" />
         <item
             android:id="@+id/nav_live_tv"
             android:icon="@drawable/ic_live_tv_black_24dp"
-            android:title="Live TV" />
+            android:title="@string/nav_live_tv" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/nav_contact">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_share_black_24dp"
-                android:title="Share" />
+                android:title="@string/nav_share" />
             <item
                 android:id="@+id/nav_website"
                 android:icon="@drawable/ic_web_black_24dp"
-                android:title="Visit Website" />
+                android:title="@string/nav_visit_website" />
         </menu>
     </item>
 
