@@ -1,9 +1,5 @@
 package com.yashketkar.ykplayer;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -17,11 +13,13 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationCompat;
-import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -30,6 +28,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 import com.android.volley.Request;
@@ -41,23 +40,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,VideosFragment.OnFragmentInteractionListener, TorrentsFragment.OnFragmentInteractionListener, LiveTVFragment.OnFragmentInteractionListener  {
+        implements NavigationView.OnNavigationItemSelectedListener, VideosFragment.OnFragmentInteractionListener, TorrentsFragment.OnFragmentInteractionListener, LiveTVFragment.OnFragmentInteractionListener {
 
     private static final String PREF_USER_LEARNED_TORRENT = "torrent_learned";
-
+    private final static int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 0;
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
     private Toolbar toolbar;
-
     private String versioncode;
     private String valert_title;
     private String valert_message;
     private String valert_message_big;
     private String downloadurl;
     private boolean mUserLearnedTorrents;
-    private final static int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,8 +105,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        makeJsonObjectRequest();
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -218,7 +213,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_videos:
                 fragment = new VideosFragment().newInstance();
                 switchfragments(fragment);
-                mTitle="Videos";
+                mTitle = "Videos";
                 restoreActionBar();
                 break;
             case R.id.nav_torrent_stream:
@@ -232,13 +227,13 @@ public class MainActivity extends AppCompatActivity
                             TorrentsHelpActivity.class);
                     startActivity(intent);
                 }
-                mTitle="Torrent Stream";
+                mTitle = "Torrent Stream";
                 restoreActionBar();
                 break;
             case R.id.nav_live_tv:
                 fragment = new LiveTVFragment().newInstance();
                 switchfragments(fragment);
-                mTitle="Live TV";
+                mTitle = "Live TV";
                 restoreActionBar();
                 break;
             case R.id.nav_share:
@@ -294,83 +289,5 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit();
-    }
-
-    private void makeJsonObjectRequest() {
-
-        String urlJsonObj = getString(R.string.version_link);
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                urlJsonObj, null, new Response.Listener<JSONObject>() {
-
-            @Override
-            public void onResponse(JSONObject response) {
-                //Log.d(TAG, response.toString());
-
-                try {
-                    // Parsing json object response
-                    // response will be a json object
-                    versioncode = response.getString("versioncode");
-                    valert_title = response.getString("valert_title");
-                    valert_message = response.getString("valert_message");
-                    valert_message_big = response.getString("valert_message_big");
-                    downloadurl = response.getString("downloadurl");
-
-                    if (BuildConfig.VERSION_CODE < Integer.parseInt(versioncode)) {
-                        NotificationCompat.Builder mBuilder =
-                                new NotificationCompat.Builder(MainActivity.this)
-                                        .setSmallIcon(R.drawable.ic_update)
-                                        .setContentTitle(valert_title)
-                                        .setContentText(valert_message)
-                                        .setColor(getResources().getColor(R.color.colorPrimary));
-                        Intent resultIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(downloadurl));
-
-                        // Because clicking the notification opens a new ("special") activity, there's
-                        // no need to create an artificial back stack.
-                        PendingIntent resultPendingIntent =
-                                PendingIntent.getActivity(
-                                        MainActivity.this,
-                                        0,
-                                        resultIntent,
-                                        PendingIntent.FLAG_UPDATE_CURRENT
-                                );
-
-                        mBuilder.setContentIntent(resultPendingIntent);
-                        mBuilder.setAutoCancel(true);
-                        mBuilder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-                        mBuilder.setDefaults(Notification.DEFAULT_ALL);
-                        mBuilder.setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(valert_message_big));
-
-                        Notification note = mBuilder.build();
-                        note.flags |= Notification.FLAG_ONLY_ALERT_ONCE;
-
-                        // Sets an ID for the notification
-                        int mNotificationId = 1;
-                        // Gets an instance of the NotificationManager service
-                        NotificationManager mNotifyMgr =
-                                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                        // Builds the notification and issues it.
-                        mNotifyMgr.notify(mNotificationId, note);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    /*Toast.makeText(getApplicationContext(),
-                            "Error: " + e.getMessage(),
-                            Toast.LENGTH_LONG).show();*/
-                }
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //VolleyLog.d(TAG, "Error: " + error.getMessage());
-                /*Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_SHORT).show();*/
-            }
-        });
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(jsonObjReq);
     }
 }
