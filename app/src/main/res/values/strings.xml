@@ -43,7 +43,6 @@
 
     <string name="app_name" translatable="false">Videos</string>
     <string name="app_caption" translatable="false">Play Anything!</string>
-    <string name="app_version" translatable="false">v2.0</string>
     <string name="title_activity_main" translatable="false">Main Activity</string>
     <string name="title_activity_video_player" translatable="false">Video Player Activity</string>
     <string name="title_activity_torrents_help" translatable="false">Torrents Help Activity</string>

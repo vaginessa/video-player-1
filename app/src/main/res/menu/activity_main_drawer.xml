@@ -9,12 +9,8 @@
             android:icon="@drawable/ic_video_library_black_24dp"
             android:title="@string/nav_local_videos" />
         <item
-            android:id="@+id/nav_network_stream"
-            android:icon="@drawable/ic_http_black_24dp"
-            android:title="@string/nav_network_stream" />
-        <item
             android:id="@+id/nav_torrent_stream"
-            android:icon="@drawable/ic_cloud_black_24dp"
+            android:icon="@drawable/ic_torrent_black_24dp"
             android:title="@string/nav_torrent_stream" />
         <item
             android:id="@+id/nav_live_tv"

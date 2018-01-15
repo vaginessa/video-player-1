@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -70,8 +71,32 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                AlertDialog.Builder nwalert = new AlertDialog.Builder(view.getContext());
+                nwalert.setTitle(getString(R.string.nw_alert_title));
+                nwalert.setMessage(getString(R.string.nw_alert_message));
+                final EditText nwinput = new EditText(view.getContext());
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                    // only for gingerbread and newer versions
+                    nwinput.setTextColor(Color.WHITE);
+                }
+                nwinput.setSingleLine();
+                nwalert.setView(nwinput);
+                nwalert.setPositiveButton(getString(R.string.nw_alert_ok),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+                                playvideo(nwinput.getText().toString()
+                                        .replaceAll("[\\t\\n\\r]", ""));
+                            }
+                        });
+                nwalert.setNegativeButton(getString(R.string.nw_alert_cancel),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+                                // Canceled.
+                            }
+                        });
+                nwalert.show();
             }
         });
 
@@ -86,7 +111,6 @@ public class MainActivity extends AppCompatActivity
 
         makeJsonObjectRequest();
 
-        // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -98,6 +122,17 @@ public class MainActivity extends AppCompatActivity
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
+                View fragmentContainerView = findViewById(R.id.fragment_container);
+                Snackbar.make(fragmentContainerView, "Storage access permission is required to scan and play media files on this device.", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+//                                ActivityCompat.requestPermissions((Activity) view.getContext(),
+//                                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+//                                        MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                            }
+                        })
+                        .show();
 
             } else {
 
@@ -112,8 +147,6 @@ public class MainActivity extends AppCompatActivity
                 // result of the request.
             }
         }
-
-        switchfragments(VideosFragment.newInstance());
         navigationView.setCheckedItem(R.id.nav_videos);
         getSupportActionBar().setTitle("Videos");
     }
@@ -129,6 +162,7 @@ public class MainActivity extends AppCompatActivity
 
                     // permission was granted, yay! Do the
                     // videos-related task you need to do.
+                    switchfragments(VideosFragment.newInstance());
 
                 } else {
 
@@ -186,34 +220,6 @@ public class MainActivity extends AppCompatActivity
                 switchfragments(fragment);
                 mTitle="Videos";
                 restoreActionBar();
-                break;
-            case R.id.nav_network_stream:
-                AlertDialog.Builder nwalert = new AlertDialog.Builder(this);
-                nwalert.setTitle(getString(R.string.nw_alert_title));
-                nwalert.setMessage(getString(R.string.nw_alert_message));
-                final EditText nwinput = new EditText(this);
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                    // only for gingerbread and newer versions
-                    nwinput.setTextColor(Color.WHITE);
-                }
-                nwinput.setSingleLine();
-                nwalert.setView(nwinput);
-                nwalert.setPositiveButton(getString(R.string.nw_alert_ok),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int whichButton) {
-                                playvideo(nwinput.getText().toString()
-                                        .replaceAll("[\\t\\n\\r]", ""));
-                            }
-                        });
-                nwalert.setNegativeButton(getString(R.string.nw_alert_cancel),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int whichButton) {
-                                // Canceled.
-                            }
-                        });
-                nwalert.show();
                 break;
             case R.id.nav_torrent_stream:
                 fragment = new TorrentsFragment().newInstance();
