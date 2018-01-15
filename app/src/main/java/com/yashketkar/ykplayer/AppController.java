@@ -7,10 +7,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-//import com.google.android.gms.analytics.GoogleAnalytics;
-//import com.google.android.gms.analytics.Tracker;
-
-import java.util.HashMap;
 
 /**
  * Created by Yash on 1/4/2015.
@@ -37,7 +33,6 @@ public class AppController extends Application {
 //    public enum TrackerName {
 //        APP_TRACKER, // Tracker used only in this app.
 //    }
-
     @Override
     public void onCreate() {
         try {
