@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity
      */
     private CharSequence mTitle;
     private Toolbar toolbar;
+    private boolean isVideosFragmentActive;
     private boolean mUserLearnedTorrents;
     private static final String PREF_USER_LEARNED_TORRENT = "torrent_learned";
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 0;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setCheckedItem(R.id.nav_videos);
         getSupportActionBar().setTitle("Videos");
 
+        isVideosFragmentActive = true;
         requestPermissions(MainActivity.this);
     }
 
@@ -105,7 +107,9 @@ public class MainActivity extends AppCompatActivity
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the
                     // videos-related task you need to do.
-                    switchFragment(VideosFragment.newInstance());
+                    if(isVideosFragmentActive){
+                        switchFragment(new VideosFragment().newInstance());
+                    }
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -153,8 +157,10 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment fragment = null;
+        isVideosFragmentActive = false;
         switch (id) {
             case R.id.nav_videos:
+                isVideosFragmentActive = true;
                 fragment = new VideosFragment().newInstance();
                 switchFragment(fragment);
                 mTitle = "Videos";
