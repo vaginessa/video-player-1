@@ -161,9 +161,8 @@ public class MainActivity extends AppCompatActivity
         switch (id) {
             case R.id.nav_videos:
                 isVideosFragmentActive = true;
-                fragment = VideosFragment.newInstance();
-                switchFragment(fragment);
-                mTitle = "Videos";
+                requestPermissions(MainActivity.this);
+                mTitle = getString(R.string.nav_local_videos);
                 restoreActionBar();
                 break;
             case R.id.nav_torrent_stream:
@@ -177,13 +176,13 @@ public class MainActivity extends AppCompatActivity
                             TorrentsHelpActivity.class);
                     startActivity(intent);
                 }
-                mTitle = "Torrent Stream";
+                mTitle = getString(R.string.nav_torrent_stream);
                 restoreActionBar();
                 break;
             case R.id.nav_live_tv:
                 fragment = LiveTVFragment.newInstance();
                 switchFragment(fragment);
-                mTitle = "Live TV";
+                mTitle = getString(R.string.nav_live_tv);
                 restoreActionBar();
                 break;
             case R.id.nav_share:
