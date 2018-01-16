@@ -208,7 +208,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onSectionAttached(int number) {
-        mTitle = getResources().getStringArray(R.array.nav_drawer_items)[number];
+        String titles[] = new String[3];
+        titles[0] = getString(R.string.nav_local_videos);
+        titles[1] = getString(R.string.nav_torrent_stream);
+        titles[2] = getString(R.string.nav_live_tv);
+        mTitle = titles[number];
     }
 
     public void onVideosFragmentInteraction(String id) {

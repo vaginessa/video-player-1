@@ -21,7 +21,7 @@
     <string name="nw_alert_ok">OK</string>
     <string name="nw_alert_cancel">Cancel</string>
     <string name="share_chooser">Share Via</string>
-    <string name="share_title">YK Player - Download Now!</string>
+    <string name="share_title">Video Player - Download Now!</string>
 
     <string name="nav_local_videos">Local Videos</string>
     <string name="nav_network_stream">Network Stream</string>
@@ -44,13 +44,11 @@
     <string name="app_name" translatable="false">Videos</string>
     <string name="app_caption" translatable="false">Play Anything!</string>
     <string name="title_activity_main" translatable="false">Main Activity</string>
-    <string name="title_activity_video_player" translatable="false">Video Player Activity</string>
-    <string name="title_activity_torrents_help" translatable="false">Torrents Help Activity</string>
-    <string name="share_message" translatable="false">http://tiny.cc/YKPlayerPro</string>
-    <string name="version_link" translatable="false">http://heroic-command-719.appspot.com/version.json</string>
-    <string name="channels_link" translatable="false">https://raw.githubusercontent.com/yashketkar/yk-player/kiswe/channels.json</string>
-    <string name="app_tracking_id" translatable="false">UA-51239695-4</string>
-    <string name="website_link" translatable="false">www.yashketkar.com</string>
+    <string name="title_activity_video_player" translatable="false">Video Player</string>
+    <string name="title_activity_torrents_help" translatable="false">Torrents Help</string>
+    <string name="share_message" translatable="false">http://tiny.cc/video-player</string>
+    <string name="channels_link" translatable="false">https://raw.githubusercontent.com/yashketkar/video-player/master/channels.json</string>
+    <string name="website_link" translatable="false">https://yashketkar.com/projects/video-player/</string>
     <string name="preference_file_key" translatable="false">com.yashketkar.ykplayer.USER_PREFERENCES</string>
 
     <array name="torrents_help_icons">
