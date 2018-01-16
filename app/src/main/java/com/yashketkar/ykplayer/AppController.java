@@ -21,8 +21,6 @@ public class AppController extends Application {
 
     private static AppController mInstance;
 
-//    HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
-
     /**
      * Enum used to identify the tracker that needs to be used for tracking.
      * <p/>
@@ -30,9 +28,7 @@ public class AppController extends Application {
      * storing them all in Application object helps ensure that they are created only once per
      * application instance.
      */
-//    public enum TrackerName {
-//        APP_TRACKER, // Tracker used only in this app.
-//    }
+
     @Override
     public void onCreate() {
         try {
