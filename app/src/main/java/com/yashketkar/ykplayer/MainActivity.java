@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity
                     // permission was granted, yay! Do the
                     // videos-related task you need to do.
                     if(isVideosFragmentActive){
-                        switchFragment(new VideosFragment().newInstance());
+                        switchFragment(VideosFragment.newInstance());
                     }
                 } else {
                     // permission denied, boo! Disable the
@@ -161,13 +161,13 @@ public class MainActivity extends AppCompatActivity
         switch (id) {
             case R.id.nav_videos:
                 isVideosFragmentActive = true;
-                fragment = new VideosFragment().newInstance();
+                fragment = VideosFragment.newInstance();
                 switchFragment(fragment);
                 mTitle = "Videos";
                 restoreActionBar();
                 break;
             case R.id.nav_torrent_stream:
-                fragment = new TorrentsFragment().newInstance();
+                fragment = TorrentsFragment.newInstance();
                 switchFragment(fragment);
                 SharedPreferences sp = this.getSharedPreferences(
                         getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity
                 restoreActionBar();
                 break;
             case R.id.nav_live_tv:
-                fragment = new LiveTVFragment().newInstance();
+                fragment = LiveTVFragment.newInstance();
                 switchFragment(fragment);
                 mTitle = "Live TV";
                 restoreActionBar();
