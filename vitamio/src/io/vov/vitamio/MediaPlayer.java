@@ -358,20 +358,20 @@ public class MediaPlayer {
     		}
     	}
     	
-    	  if(LIB_ROOT==null){
+//    	  if(LIB_ROOT==null){
     	    	System.loadLibrary("stlport_shared");
     	    	System.loadLibrary("vplayer");	
     	    	loadFFmpeg_native("libffmpeg.so");
     	    	loadVVO_native("libvvo.9.so");
     	    	loadVVO_native("libvvo.9.so");
     	    	loadVAO_native("libvao.0.so");
-    	    }else{
-    	    	System.load(LIB_ROOT+ "libstlport_shared.so");
-    	    	System.load(LIB_ROOT+ "libvplayer.so");
-    	    	loadFFmpeg_native(LIB_ROOT+"libffmpeg.so");
-    	    	loadVVO_native(LIB_ROOT+ "libvvo.9.so");
-    	    	loadVAO_native( LIB_ROOT+ "libvao.0.so");
-    	    }  
+//    	    }else{
+//    	    	System.load(LIB_ROOT+ "libstlport_shared.so");
+//    	    	System.load(LIB_ROOT+ "libvplayer.so");
+//    	    	loadFFmpeg_native(LIB_ROOT+"libffmpeg.so");
+//    	    	loadVVO_native(LIB_ROOT+ "libvvo.9.so");
+//    	    	loadVAO_native( LIB_ROOT+ "libvao.0.so");
+//    	    }
     	  
     }catch(Exception e){
     	Log.e("load library err ");

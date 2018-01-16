@@ -273,5 +273,8 @@ public class MainActivity extends AppCompatActivity
                 // result of the request.
             }
         }
+        else{
+            switchFragment(VideosFragment.newInstance());
+        }
     }
 }
