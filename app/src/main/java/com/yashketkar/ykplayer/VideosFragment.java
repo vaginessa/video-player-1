@@ -131,7 +131,7 @@ public class VideosFragment extends Fragment implements AbsListView.OnItemClickL
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
-                Snackbar.make(videosFragmentView, "Storage access permission is required to scan and play media files on this device.", Snackbar.LENGTH_INDEFINITE)
+                MainActivity.permissionsSnackbar = Snackbar.make(videosFragmentView, "Storage access permission is required to scan and play media files on this device.", Snackbar.LENGTH_INDEFINITE)
                         .setAction("OK", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -139,8 +139,8 @@ public class VideosFragment extends Fragment implements AbsListView.OnItemClickL
                                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                                         MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
                             }
-                        })
-                        .show();
+                        });
+                MainActivity.permissionsSnackbar.show();
 
             } else {
                 // No explanation needed, we can request the permission.

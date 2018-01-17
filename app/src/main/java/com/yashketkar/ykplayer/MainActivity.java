@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -36,10 +37,10 @@ public class MainActivity extends AppCompatActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    private Toolbar toolbar;
     private boolean mUserLearnedTorrents;
     private static final String PREF_USER_LEARNED_TORRENT = "torrent_learned";
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 0;
+    public static Snackbar permissionsSnackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity
             mCurrentSelectedPosition = R.id.nav_videos;
         }
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -96,8 +97,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_videos);
-        getSupportActionBar().setTitle("Videos");
+        if(mCurrentSelectedPosition==R.id.nav_videos){
+            navigationView.setCheckedItem(R.id.nav_videos);
+        }
 
         loadFragment(mCurrentSelectedPosition);
     }
@@ -113,13 +115,13 @@ public class MainActivity extends AppCompatActivity
                     // permission was granted, yay! Do the
                     // videos-related task you need to do.
                     if (mCurrentSelectedPosition == R.id.nav_videos) {
-                        switchFragment(VideosFragment.newInstance());
+                        loadFragment(mCurrentSelectedPosition);
                     }
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                     if (mCurrentSelectedPosition == R.id.nav_videos) {
-                        switchFragment(VideosFragment.newInstance());
+                        loadFragment(mCurrentSelectedPosition);
                     }
                 }
                 return;
@@ -197,7 +199,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void restoreActionBar() {
-        toolbar.setTitle(mTitle);
+        MainActivity.this.setTitle(mTitle);
+//        toolbar.setTitle(mTitle);
     }
 
     private void playVideo(String id) {
@@ -208,6 +211,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void loadFragment(int fragmentID) {
+        if(MainActivity.permissionsSnackbar != null){
+            MainActivity.permissionsSnackbar.dismiss();
+        }
         Fragment fragment = null;
         switch (fragmentID) {
             case R.id.nav_videos:
