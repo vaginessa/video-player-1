@@ -1,7 +1,5 @@
 package com.yashketkar.ykplayer;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,11 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -32,19 +27,30 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, VideosFragment.OnFragmentInteractionListener, TorrentsFragment.OnFragmentInteractionListener, LiveTVFragment.OnFragmentInteractionListener {
 
     /**
+     * Remember the position of the selected item.
+     */
+    private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
+    private int mCurrentSelectedPosition;
+
+    /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
     private Toolbar toolbar;
-    private boolean isVideosFragmentActive;
     private boolean mUserLearnedTorrents;
     private static final String PREF_USER_LEARNED_TORRENT = "torrent_learned";
-    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 0;
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState != null) {
+            mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
+        } else {
+            mCurrentSelectedPosition = R.id.nav_videos;
+        }
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -93,8 +99,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setCheckedItem(R.id.nav_videos);
         getSupportActionBar().setTitle("Videos");
 
-        isVideosFragmentActive = true;
-        requestPermissions(MainActivity.this);
+        loadFragment(mCurrentSelectedPosition);
     }
 
     @Override
@@ -107,13 +112,15 @@ public class MainActivity extends AppCompatActivity
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the
                     // videos-related task you need to do.
-                    if(isVideosFragmentActive){
+                    if (mCurrentSelectedPosition == R.id.nav_videos) {
                         switchFragment(VideosFragment.newInstance());
                     }
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-                    requestPermissions(MainActivity.this);
+                    if (mCurrentSelectedPosition == R.id.nav_videos) {
+                        switchFragment(VideosFragment.newInstance());
+                    }
                 }
                 return;
             }
@@ -153,15 +160,59 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
+    }
+
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        mCurrentSelectedPosition = id;
+        loadFragment(id);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    public void onSectionAttached(int number) {
+        String titles[] = new String[3];
+        titles[0] = getString(R.string.nav_local_videos);
+        titles[1] = getString(R.string.nav_torrent_stream);
+        titles[2] = getString(R.string.nav_live_tv);
+        mTitle = titles[number];
+    }
+
+    public void onVideosFragmentInteraction(String id) {
+        playVideo(id);
+    }
+
+    public void onLiveTVFragmentInteraction(String id) {
+        playVideo(id);
+    }
+
+    public void onTorrentsFragmentInteraction(String id) {
+        playVideo(id);
+    }
+
+    public void restoreActionBar() {
+        toolbar.setTitle(mTitle);
+    }
+
+    private void playVideo(String id) {
+        Intent intent = new Intent(MainActivity.this,
+                VideoPlayerActivity.class);
+        intent.putExtra("EXTRA_URL", id);
+        startActivity(intent);
+    }
+
+    private void loadFragment(int fragmentID) {
         Fragment fragment = null;
-        isVideosFragmentActive = false;
-        switch (id) {
+        switch (fragmentID) {
             case R.id.nav_videos:
-                isVideosFragmentActive = true;
-                requestPermissions(MainActivity.this);
+                fragment = VideosFragment.newInstance();
+                switchFragment(fragment);
                 mTitle = getString(R.string.nav_local_videos);
                 restoreActionBar();
                 break;
@@ -201,40 +252,6 @@ public class MainActivity extends AppCompatActivity
             default:
                 break;
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    public void onSectionAttached(int number) {
-        String titles[] = new String[3];
-        titles[0] = getString(R.string.nav_local_videos);
-        titles[1] = getString(R.string.nav_torrent_stream);
-        titles[2] = getString(R.string.nav_live_tv);
-        mTitle = titles[number];
-    }
-
-    public void onVideosFragmentInteraction(String id) {
-        playVideo(id);
-    }
-
-    public void onLiveTVFragmentInteraction(String id) {
-        playVideo(id);
-    }
-
-    public void onTorrentsFragmentInteraction(String id) {
-        playVideo(id);
-    }
-
-    public void restoreActionBar() {
-        toolbar.setTitle(mTitle);
-    }
-
-    private void playVideo(String id) {
-        Intent intent = new Intent(MainActivity.this,
-                VideoPlayerActivity.class);
-        intent.putExtra("EXTRA_URL", id);
-        startActivity(intent);
     }
 
     private void switchFragment(Fragment fragment) {
@@ -242,42 +259,5 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit();
-    }
-
-    private void requestPermissions(final Activity thisActivity) {
-        if (ContextCompat.checkSelfPermission(thisActivity,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(thisActivity,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-                View fragmentContainerView = findViewById(R.id.fragment_container);
-                Snackbar.make(fragmentContainerView, "Storage access permission is required to scan and play media files on this device.", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("OK", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ActivityCompat.requestPermissions(thisActivity,
-                                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                        MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                            }
-                        })
-                        .show();
-
-            } else {
-                // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(thisActivity,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        }
-        else{
-            switchFragment(VideosFragment.newInstance());
-        }
     }
 }

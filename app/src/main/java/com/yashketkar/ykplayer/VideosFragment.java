@@ -1,11 +1,17 @@
 package com.yashketkar.ykplayer;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,23 +61,20 @@ public class VideosFragment extends Fragment implements AbsListView.OnItemClickL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Uri uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-        String[] projection = {MediaStore.Video.VideoColumns.DISPLAY_NAME, MediaStore.Video.VideoColumns.DATA, MediaStore.Video.VideoColumns._ID};
-        Cursor c = getActivity().getContentResolver().query(uri, projection, null, null, null);
-        mAdapter = new VideosAdapter(getActivity(), c, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_videos, container, false);
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        mListView.setEmptyView(view.findViewById(android.R.id.empty));
+        View videosFragmentView = inflater.inflate(R.layout.fragment_videos, container, false);
+        mListView = videosFragmentView.findViewById(android.R.id.list);
+        mListView.setEmptyView(videosFragmentView.findViewById(android.R.id.empty));
+        requestPermissions(getActivity(), getActivity().findViewById(R.id.fragment_container));
         // Set the adapter
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        (mListView).setAdapter(mAdapter);
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
-        return view;
+        return videosFragmentView;
     }
 
     @Override
@@ -115,6 +118,44 @@ public class VideosFragment extends Fragment implements AbsListView.OnItemClickL
 
         if (emptyView instanceof TextView) {
             ((TextView) emptyView).setText(emptyText);
+        }
+    }
+
+    private void requestPermissions(final Activity thisActivity, View videosFragmentView) {
+        if (ContextCompat.checkSelfPermission(thisActivity,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(thisActivity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                Snackbar.make(videosFragmentView, "Storage access permission is required to scan and play media files on this device.", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                ActivityCompat.requestPermissions(thisActivity,
+                                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                        MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                            }
+                        })
+                        .show();
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(thisActivity,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            Uri uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+            String[] projection = {MediaStore.Video.VideoColumns.DISPLAY_NAME, MediaStore.Video.VideoColumns.DATA, MediaStore.Video.VideoColumns._ID};
+            Cursor c = getActivity().getContentResolver().query(uri, projection, null, null, null);
+            mAdapter = new VideosAdapter(getActivity(), c, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         }
     }
 
